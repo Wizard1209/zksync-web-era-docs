@@ -125,6 +125,10 @@ export const enSidebar = sidebar({
               link: "/build/tutorials/tooling-guides/the-graph.md",
             },
             {
+              text: "Thirdweb",
+              link: "/build/tutorials/tooling-guides/thirdweb.md",
+            },
+            {
               text: "SubQuery",
               link: "/build/tutorials/tooling-guides/subquery.md",
             },
