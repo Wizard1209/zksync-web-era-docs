@@ -219,7 +219,7 @@ api:
   host: 0.0.0.0
 ```
 
-2. Create your cloud deploy configuration with following contents in DipDup project root:
+1. Create a deploy configuration file `squid.yaml` with the following contents in the root directory of your DipDup project:
 
 ```yaml [squid.yaml]
 manifestVersion: subsquid.io/v0.1
