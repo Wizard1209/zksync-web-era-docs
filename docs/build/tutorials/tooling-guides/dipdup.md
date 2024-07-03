@@ -184,12 +184,12 @@ Most powerful and common DipDup application configuration uses PostgreSQL to sto
 4. As an example, let's query the first 10 addresses with a positive balance:
    ![hasura request](../../../assets/images/hasurarequest.png)
 
-## Moving to Cloud
+## Moving to [Cloud](https://subsquid.io/subsquid-cloud)
 
-In this part we will deploy our indexer to the Subsquid Cloud.
-We will add two configuration files one `dipdup.subsquid-cloud.yaml` - `dipdup.yaml` extension to run in subsquid cloud environment and `squid.yaml` with deployment configuration.
+In this part we will deploy our indexer to the [Subsquid Cloud](https://app.subsquid.io/).
+We will add two configuration files to our DipDup project one `dipdup.subsquid-cloud.yaml` - `dipdup.yaml` extension to run in [Subsquid Cloud](https://app.subsquid.io/) environment and `squid.yaml` with deployment configuration.
 
-1. Create `dipdup.subsquid-cloud.yaml` file with following contents:
+1. Create `configs/dipdup.subsquid-cloud.yaml` file in your DipDup project with following contents:
 
 ```yaml [dipdup.subsquid-cloud.yaml]
 database:
@@ -219,7 +219,7 @@ api:
   host: 0.0.0.0
 ```
 
-2. Create your cloud deploy configuration with following contents:
+2. Create your cloud deploy configuration with following contents in DipDup project root:
 
 ```yaml [squid.yaml]
 manifestVersion: subsquid.io/v0.1
@@ -244,14 +244,14 @@ deploy:
     cmd: ["echo", "dipdup"]
 ```
 
-3. Log in or register in Subsquid Cloud and set secrets we defined in previous step
+3. Log in or register in [Subsquid Cloud](https://app.subsquid.io/) and set secrets we defined in previous step
    ![cloud-secrets](../../../assets/images/cloud-secrets.jpg)
 
-4. Setup and authenticate Squid CLI, you will find extensive instruction on this in the starting page of Subsquid Cloud (first step)
+4. Setup and authenticate Squid CLI, you will find extensive instruction on this in the starting page of [Subsquid Cloud](https://app.subsquid.io/) (first step)
    ![squid-cli](../../../assets/images/squid-cli.png)
 
-5. Run `sqd deploy`, note that playground (is free and) have limitations, for huge indexers you will need to add organization and setup billing in Subsquid Cloud and then set scale options in your deployment, read more about it in [cloud docs](https://docs.subsquid.io/cloud/reference/scale/)
-   Open squid in Subsquid Cloud and ensure everything working well, explore healthchecks, logs and monitoring
+5. Run `sqd deploy`, note that playground (is free and) have limitations, for huge indexers you will need to add organization and setup billing in [Subsquid Cloud](https://app.subsquid.io/) and then set scale options in your deployment, read more about it in [cloud docs](https://docs.subsquid.io/cloud/reference/scale/)
+   Open squid in [Subsquid Cloud](https://app.subsquid.io/) and ensure everything working well, explore healthchecks, logs and monitoring
 
 6. Copy graphql endpoint, replace last fragment with graphql or log into hasura and copy graphql endpoint directly
    ![graphql-endpoint.jpg](../../../assets/images/graphql-endpoint.jpg)
