@@ -189,7 +189,7 @@ Most powerful and common DipDup application configuration uses PostgreSQL to sto
 In this part we will deploy our indexer to the Subsquid Cloud.
 We will add two configuration files one `dipdup.subsquid-cloud.yaml` - `dipdup.yaml` extension to run in subsquid cloud environment and `squid.yaml` with deployment configuration.
 
-1. Create `dipdup.subsquid-cloud.yaml` file with following contents, make sure you haven't used this sections in your main indexer config `dipdup.yaml`:
+1. Create `dipdup.subsquid-cloud.yaml` file with following contents:
 
 ```yaml [dipdup.subsquid-cloud.yaml]
 database:
@@ -250,7 +250,7 @@ deploy:
 4. Setup and authenticate Squid CLI, you will find extensive instruction on this in the starting page of Subsquid Cloud (first step)
    ![squid-cli](../../../assets/images/squid-cli.png)
 
-5. Run `sqd deploy`, note that playground (is free and) have limitations, for huge indexers you will need to add organization and setup billing in Subsquid Cloud and then set scale options in your deployment more about it [scale](https://docs.subsquid.io/cloud/reference/scale/)
+5. Run `sqd deploy`, note that playground (is free and) have limitations, for huge indexers you will need to add organization and setup billing in Subsquid Cloud and then set scale options in your deployment, read more about it in [cloud docs](https://docs.subsquid.io/cloud/reference/scale/)
    Open squid in Subsquid Cloud and ensure everything working well, explore healthchecks, logs and monitoring
 
 6. Copy graphql endpoint, replace last fragment with graphql or log into hasura and copy graphql endpoint directly
