@@ -184,6 +184,81 @@ Most powerful and common DipDup application configuration uses PostgreSQL to sto
 4. As an example, let's query the first 10 addresses with a positive balance:
    ![hasura request](../../../assets/images/hasurarequest.png)
 
+## Moving to Cloud
+
+In this part we will deploy our indexer to the Subsquid Cloud.
+We will add two configuration files one `dipdup.subsquid-cloud.yaml` - `dipdup.yaml` extension to run in subsquid cloud environment and `squid.yaml` with deployment configuration.
+
+1. Create `dipdup.subsquid-cloud.yaml` file with following contents, make sure you haven't used this sections in your main indexer config `dipdup.yaml`:
+
+```yaml [dipdup.subsquid-cloud.yaml]
+database:
+  kind: postgres
+  host: ${DB_HOST:-db}
+  port: ${DB_PORT}
+  user: ${DB_USER:-dipdup}
+  password: ${DB_PASS}
+  database: ${DB_NAME:-dipdup}
+
+hasura:
+  url: http://${HASURA_HOST:-hasura}:8080
+  admin_secret: ${HASURA_GRAPHQL_ADMIN_SECRET}
+  allow_aggregations: ${HASURA_ALLOW_AGGREGATIONS:-true}
+  select_limit: ${HASURA_SELECT_LIMIT:-10000}
+  camel_case: ${HASURA_CAMEL_CASE:-true}
+
+sentry:
+  dsn: ${SENTRY_DSN:-''}
+  environment: ${SENTRY_ENVIRONMENT:-''}
+
+prometheus:
+  host: 0.0.0.0
+  port: 3000
+
+api:
+  host: 0.0.0.0
+```
+
+2. Create your cloud deploy configuration with following contents:
+
+```yaml [squid.yaml]
+manifestVersion: subsquid.io/v0.1
+name: dipdup-zksync-subsquid
+version: 1
+description: |-
+  Your indexer description
+build:
+deploy:
+  env:
+    HASURA_GRAPHQL_ADMIN_SECRET: "${{ secrets.HASURA_SECRET }}"
+    HASURA_GRAPHQL_UNAUTHORIZED_ROLE: user
+    HASURA_GRAPHQL_STRINGIFY_NUMERIC_TYPES: "true"
+    DIPDUP_LOW_MEMORY: 1
+    # if you use node NODE_API_KEY: "${{ secrets.API_KEY }}"
+  addons:
+    postgres:
+    hasura:
+  processor:
+    cmd: ["dipdup", "-c", "dipdup.yaml", "-c", "configs/dipdup.subsquid-cloud.yaml", "run"]
+  init:
+    cmd: ["echo", "dipdup"]
+```
+
+3. Log in or register in Subsquid Cloud and set secrets we defined in previous step
+   ![cloud-secrets](../../../assets/images/cloud-secrets.jpg)
+
+4. Setup and authenticate Squid CLI, you will find extensive instruction on this in the starting page of Subsquid Cloud (first step)
+   ![squid-cli](../../../assets/images/squid-cli.png)
+
+5. Run `sqd deploy`, note that playground (is free and) have limitations, for huge indexers you will need to add organization and setup billing in Subsquid Cloud and then set scale options in your deployment more about it [scale](https://docs.subsquid.io/cloud/reference/scale/)
+   Open squid in Subsquid Cloud and ensure everything working well, explore healthchecks, logs and monitoring
+
+6. Copy graphql endpoint, replace last fragment with graphql or log into hasura and copy graphql endpoint directly
+   ![graphql-endpoint.jpg](../../../assets/images/graphql-endpoint.jpg)
+
+7. Explore your API in our playground [ide.dipdup.io](ide.dipdup.io)
+   ![dipdup-playground.png](../../../assets/images/dipdup-playground.png)
+
 ## Explore DipDup
 
 To learn more about DipDup features, visit the [official DipDup documentation](https://dipdup.io/docs). It offers an in-depth explanation of the framework concepts, lots of examples from basic to the most advanced, allowing rapid and efficient development of blockchain data indexers of any complexity.
